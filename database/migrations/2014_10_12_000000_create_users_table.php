@@ -18,9 +18,12 @@ class CreateUsersTable extends Migration
             $table->string('name')->default("anonemous")->nullable();
             $table->string('email')->unique()->required();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password')->required();
-            $table->string('accountType')->default("student")->required();
-            $table->rememberToken();
+            $table->string('password',255)->required();
+            $table->string('role')->default("student")->required();
+            $table->integer("testsAllowed")->default(0);
+            $table->integer("totalTestsTaken")->default(0);
+            $table->integer("area")->nullable();
+            $table->rememberToken()->nullable();
             $table->timestamps();
         });
     }

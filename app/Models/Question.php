@@ -13,8 +13,8 @@ class Question extends Model
         return $this->belongsTo(Subject::class);
     }
 
-public function validate(Request $request){
+// public function validate(Request $request){
 
-}//validate
+// }//validate
 
 }//class
