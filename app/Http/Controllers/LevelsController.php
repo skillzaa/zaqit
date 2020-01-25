@@ -6,24 +6,33 @@ use Illuminate\Http\Request;
 
 class LevelsController extends Controller
 {
-    public function index()
+public function index()
+{$data = Level::paginate(5);
+ return view('manage.level')->with("data",$data);
+//    return LevelResource::collection($ret);
+}
+    public function create()
     {
-        $ret = Level::all();
-        return LevelResource::collection($ret);
+    return view('create.level');
     }
+    public function edit($id)
+        {
+            //
+        }
 
 
 public function store(Request $request)
-    {
-         $validatedData = $request->validate([
-        'name' => 'required|unique:subjects|max:255'
-]);
-    //$unique = Level::where("name","=",$request->name)->count();
-$level = new Level;
-$level->name = $request->name;
-$level->save();
-return new LevelResource($level);
-    }
+{
+    $validatedData = $request->validate([
+        'name' => 'required|unique:levels|max:20|min:3|regex:/^[a-z\d\-_\s]+$/i'
+        ]);
+        $level = new Level;
+        $level->name = $request->name;
+        $level->save();
+    //return new SubjectResource($subject);
+    $request->session()->flash('mainMessage', 'Level '.$request->name .' has been created');
+    return redirect('level/create');
+}//store
 
     public function show($id)
     {

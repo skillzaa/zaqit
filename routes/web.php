@@ -1,10 +1,9 @@
 <?php
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::Resource('subject','SubjectsController');
+Route::Resource('level','LevelsController');
+Route::Resource('displayheading','DisplayHeadingController');
+Route::Resource('question','QuestionController');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');

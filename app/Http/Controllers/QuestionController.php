@@ -2,69 +2,76 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Question;
+use App\Models\Subject;
+use App\Models\Level;
 use App\Http\Resources\QuestionResource;
-
 class QuestionController extends Controller
 {
 public function index()
 {
-//dd("all ok");
-$ret = Question::all();
-return QuestionResource::collection($ret);
+$data = Question::paginate(25);
+return view('manage.question')->with('data',$data);
+//return QuestionResource::collection($ret);
+}
+
+public function create()
+{
+ $data['subjects'] = Subject::all();
+ $data['levels'] = Level::all();
+return view('create.question')->with( "data",$data);
 }
 
 
 public function store(Request $request)
-    {
+{
+//    dd($request->all());
 $validatedData = $request->validate([
         'question' => 'required',
         'option1'=>'required',
         'option2'=>'required',
         'option3'=>'required',
         'option4'=>'required',
-        'correctOption'=>'required',
+        'correctOption'=>'required|digits_between:1,4',
         'subject_id'=>'required',
         'level_id'=>'required'
 ]);
-//$unique = Question::where("name","=",$request->name)->count();
-$question = new Question;
-$question->question = $request->question;
-$question->option1 = $request->option1;
-$question->option2 = $request->option2;
-$question->option3 = $request->option3;
-$question->option4 = $request->option4;
-$question->correctOption = $request->correctOption;
-$question->subject_id = $request->subject_id;
-$question->level_id = $request->level_id;
-$question->explanation = $request->explanation;
-$question->notes = $request->notes;
-$question->save();
-return new QuestionResource($question);
+Question::create($request->all());
+//return new QuestionResource($question);
+$request->session()->flash('mainMessage', 'Question has been created');
+return redirect('question/create');
 }
 
 public function show($id)
 {
-$question = Question::findOrFail($id);
+$data['subjects'] = Subject::all();
+$data['levels'] = Level::all();
+$data['question'] = Question::findOrFail($id);
 //we can use validate here since validate is with $request and this is a GET request thus has no $request
- return new QuestionResource($question);
+return view('edit.question')->with("data",$data);
+//return new QuestionResource($data['question']);
 }
 
 public function update(Request $request, $id)
-{$question = Question::findOrFail($id);
-//-------------------------------
-$question->question = $request->question;
-$question->option1 = $request->option1;
-$question->option2 = $request->option2;
-$question->option3 = $request->option3;
-$question->option4 = $request->option4;
-$question->correctOption = $request->correctOption;
-$question->subject_id = $request->subject_id;
-$question->level_id = $request->level_id;
-$question->explanation = $request->explanation;
-$question->notes = $request->notes;
-//-----------------------------------
-$question->save();
-return  new QuestionResource($question);
+{
+//dd('update');
+// option 2   $speakUpdate->fill($input)->save();
+$validatedData = $request->validate([
+'question' => 'required',
+'option1'=>'required',
+'option2'=>'required',
+'option3'=>'required',
+'option4'=>'required',
+'correctOption'=>'required|digits_between:1,4',
+'subject_id'=>'required',
+'level_id'=>'required'
+]);
+    //-------------------------------
+$question = Question::findOrFail($id);
+//return  new QuestionResource($question);
+$input = $request->all();
+$question->fill($input)->save();
+$request->session()->flash('mainMessage', 'Question has been Updated');
+return redirect()->back();
 }
 
 public function destroy($id)

@@ -7,21 +7,32 @@ class SubjectsController extends Controller
 {
 public function index()
 {
-    $ret = Subject::all();
-    return SubjectResource::collection($ret);
+$data = Subject::paginate(5);
+return view('manage.subject')->with("data",$data);
+//    return SubjectResource::collection($ret);
 }
-
+public function create()
+{
+return view('create.subject');
+}
+public function edit($id)
+    {
+        //
+    }
 
 public function store(Request $request)
 {
+//    dd($request->name);
 $validatedData = $request->validate([
-    'name' => 'required|unique:subjects|max:255'
+    'name' => 'required|unique:subjects|max:20|min:3|regex:/^[a-z\d\-_\s]+$/i'
     ]);
 //$unique = Subject::where("name","=",$request->name)->count();
 $subject = new Subject;
 $subject->name = $request->name;
 $subject->save();
-return new SubjectResource($subject);
+//return new SubjectResource($subject);
+$request->session()->flash('mainMessage', 'Subject '.$request->name .' has been created');
+return redirect('subject/create');
 }
 
 public function show($id)
@@ -36,14 +47,10 @@ else{
 
 public function update(Request $request, $id)
 {
-    $ret = Subject::find($id);
-    if($ret=== null ){return "No Record Found Please"; }
-   else{
     $subject = Subject::findOrFail($id);
     $subject->name = $request->name;
      $subject->save();
      return  new SubjectResource($subject);
-}
 }
 
 public function destroy($id)

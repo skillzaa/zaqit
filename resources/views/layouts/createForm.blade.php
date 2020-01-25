@@ -1,15 +1,12 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Scripts -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- CSRF Token -->
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<title>{{ config('app.name', 'Laravel') }}</title>
+<!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
@@ -23,6 +20,18 @@
     <div id="app">
 @include('includes.nav')
         <main class="py-4">
+@if (session()->get('mainMessage'))
+<div class="card m-1 p-2 text-success border border-success">
+{{session()->get('mainMessage') }}
+</div>
+@endif
+
+@if($errors->any())
+<div class="card m-1 p-2 text-danger border border-danger">
+{{ implode('', $errors->all(':message')) }}
+</div>
+@endif
+
             @yield('content')
         </main>
     </div>
