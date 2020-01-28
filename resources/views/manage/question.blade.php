@@ -4,20 +4,7 @@
 <div class="container">
 @include('includes.questionsQuery')
     <h2>Manage Question</h2>
-<div>
-    Current Page:<span class="text-danger">
-        {{($data['questions']->currentPage())}}
-        </span>
-    Total  Pages:<span class="text-danger">
-        {{($data['questions']->lastPage())}}
-        </span>
-    Per Page:<span class="text-danger">
-        {{($data['questions']->perPage())}}
-        </span>
-    Total:<span class="text-danger">
-        {{($data['questions']->total())}}
-        </span>
-</div>
+@include('includes.paginationBar')
     {{(is_null($data['questions']))?"":$data['questions']->links()}}
 <table class="table table-striped table-dark">
 <thead>
