@@ -13,7 +13,6 @@ class QuestionController extends Controller
 {
 public function index()
 {
-
 $data['subjects'] = Subject::all();
 $data['levels'] = Level::all();
 $data['questions'] = Question::trippleWhere2();

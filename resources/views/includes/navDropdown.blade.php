@@ -12,6 +12,7 @@
 
   <div class="dropdown-divider"></div>
   <a class="dropdown-item" href="{{ url('/question/create') }}">Question</a>
-  <a class="dropdown-item" href="#">Paper</a>
+  <a class="dropdown-item" href="{{ url('/paper/create') }}">Paper</a>
+
 </div>
 </li>
