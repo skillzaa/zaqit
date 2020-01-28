@@ -15,7 +15,7 @@ class QuestionResource extends JsonResource
             "option4"=> $this->option4,
             "correctOption"=> $this->correctOption,
             "subject"=> $this->subject->name,
-            "level"=> $this->level->name
+            "level"=> $this->level->name,
         ];
 
     }

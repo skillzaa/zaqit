@@ -4,7 +4,6 @@
     <h2>Add a Question</h2>
 <form method="POST" action="{{ URL::to('/question') }}" enctype="multipart/form-data">
         {{ csrf_field() }}
-
 <div class="form-group row">
 <label for="titleid" class="col-sm-3 col-form-label">
    Subjects :</label>

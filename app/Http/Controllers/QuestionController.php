@@ -4,12 +4,50 @@ use Illuminate\Http\Request;
 use App\Models\Question;
 use App\Models\Subject;
 use App\Models\Level;
+use Session;
+use App\Http\Requests\QuestionRequest;
 use App\Http\Resources\QuestionResource;
+use Illuminate\Support\Facades\DB;
+
 class QuestionController extends Controller
 {
 public function index()
 {
-$data = Question::paginate(25);
+
+$data['subjects'] = Subject::all();
+$data['levels'] = Level::all();
+$data['questions'] = Question::trippleWhere2();
+return view('manage.question')->with('data',$data);
+}
+
+public function tripplePost(Request $request){
+$validatedData = $request->validate([
+    'subject_id' => 'required',
+    'level_id' => 'required',
+    'difficulty' => "required|in:easy,medium,hard,any",
+]);
+Session::put('subject_id', $request->subject_id);
+Session::put('level_id', $request->level_id);
+Session::put('difficulty', $request->difficulty);
+//dd(session()->all());
+return redirect('question');
+}//tripple
+
+public function query(Request $request)
+{
+$validatedData = $request->validate([
+'subject_id' => 'required',
+'level_id' => 'required',
+'difficulty' => "required|in:easy,medium,hard",
+]);
+
+$q = new Question;
+$q2  =($q->trippleWhere($request->subject_id,$request->level_id,$request->difficulty));
+$q3 = Question::hydrate($q2);
+$data['questions'] =$q3;
+
+$data['subjects'] = Subject::all();
+$data['levels'] = Level::all();
 return view('manage.question')->with('data',$data);
 //return QuestionResource::collection($ret);
 }
@@ -22,19 +60,8 @@ return view('create.question')->with( "data",$data);
 }
 
 
-public function store(Request $request)
+public function store(QuestionRequest $request)
 {
-//    dd($request->all());
-$validatedData = $request->validate([
-        'question' => 'required',
-        'option1'=>'required',
-        'option2'=>'required',
-        'option3'=>'required',
-        'option4'=>'required',
-        'correctOption'=>'required|digits_between:1,4',
-        'subject_id'=>'required',
-        'level_id'=>'required'
-]);
 Question::create($request->all());
 //return new QuestionResource($question);
 $request->session()->flash('mainMessage', 'Question has been created');
@@ -51,21 +78,8 @@ return view('edit.question')->with("data",$data);
 //return new QuestionResource($data['question']);
 }
 
-public function update(Request $request, $id)
+public function update(QuestionRequest $request, $id)
 {
-//dd('update');
-// option 2   $speakUpdate->fill($input)->save();
-$validatedData = $request->validate([
-'question' => 'required',
-'option1'=>'required',
-'option2'=>'required',
-'option3'=>'required',
-'option4'=>'required',
-'correctOption'=>'required|digits_between:1,4',
-'subject_id'=>'required',
-'level_id'=>'required'
-]);
-    //-------------------------------
 $question = Question::findOrFail($id);
 //return  new QuestionResource($question);
 $input = $request->all();
@@ -76,10 +90,22 @@ return redirect()->back();
 
 public function destroy($id)
 {
-$question = Question::findOrFail($id);
-$question->delete();
-return  new QuestionResource($question);
+$item = Question::findOrFail($id);
+$item->delete();
+Session::flash('mainMessage' , 'Item Deleted');
+//return redirect()->back();//dont return --reload
+return redirect('question/');
+}
+/**
+ * return 1 column from an Aray of objects (Assoc array)
+ */
+public function aoo($arr,$value,$col="id"){
+    foreach($arr as $k=>$v){
+        if($k["id"]==$value){
+            return $k['id'];
+        }
+    }
 }
 
-    }
+}
     //class

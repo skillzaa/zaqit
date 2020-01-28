@@ -5,7 +5,7 @@
 <div class="container">
     <h2>Add Display Heading</h2>
 
-<form method="POST" action="{{ URL::to('/displayheading/store') }}" enctype="multipart/form-data">
+<form method="POST" action="{{ URL::to('/displayheading') }}" enctype="multipart/form-data">
         {{ csrf_field() }}
 
 <div class="form-group row">

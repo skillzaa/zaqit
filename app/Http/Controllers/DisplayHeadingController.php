@@ -3,7 +3,8 @@ namespace App\Http\Controllers;
 use App\Models\DisplayHeading;
 use Illuminate\Http\Request;
 use App\Http\Resources\DisplayHeadingResource;
-
+use Session;
+use App\Http\Requests\ItemRequest;
 class DisplayHeadingController extends Controller
 {
 public function index()
@@ -16,18 +17,10 @@ public function create()
 {
 return view('create.displayheading');
 }
-public function edit($id)
-    {
-        //
-    }
 
-
-public function store(Request $request)
+public function store(ItemRequest $request)
 {
-$validatedData = $request->validate([
-    'name' => 'required|unique:subjects|max:20|min:3|regex:/^[\pL\s\-]+$/u'
-    ]);
-    $dh = new DisplayHeading;
+$dh = new DisplayHeading;
     $dh->name = $request->name;
     $dh->save();
 //return new SubjectResource($subject);
@@ -37,23 +30,26 @@ return redirect('displayheading/create');
 
 public function show($id)
 {
-//we can use validate here since validate is with $request and this is a GET request thus has no $request
- $ret = DisplayHeading::find($id);
- if($ret=== null ){return "No Record Found Please"; }
-else{
-    return new DisplayHeadingResource($ret);
-}
+$data = DisplayHeading::findOrFail($id);
+return view('edit.displayheading')->with("data",$data);
 }
 
-public function update(Request $request, $id)
+public function update(ItemRequest $request, $id)
 {
-
-
+$item = DisplayHeading::findOrFail($id);
+$input = $request->all();
+$item->fill($input)->save();
+$request->session()->flash('mainMessage', 'Updated...');
+return redirect()->back();
 }
 
 public function destroy($id)
 {
-
+    $item = DisplayHeading::findOrFail($id);
+    $item->delete();
+    Session::flash('mainMessage' , 'Item Deleted');
+    //return redirect()->back();//dont return --reload
+    return redirect('displayheading/');
 
 }
 

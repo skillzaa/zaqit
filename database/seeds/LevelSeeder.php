@@ -5,6 +5,6 @@ class LevelSeeder extends Seeder
 
     public function run()
     {
-        factory(App\Models\Level::class,15)->create();
+        factory(App\Models\Level::class,4)->create();
     }
 }

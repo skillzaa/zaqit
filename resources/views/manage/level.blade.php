@@ -16,9 +16,18 @@
 <tbody>
     <tr>
         <td>{{$value['name']}}</td>
-        <td><button class="btn btn-sm btn-primary">Edit</button></td>
-        <td><button class="btn btn-sm btn-danger">Delete</button></td>
-    </tr>
+    <td><a class="btn btn-sm btn-primary" href="{{ URL('/level/'.$value['id'] )}}">
+        Edit</a></td>
+<td>
+<form method="POST"
+action="{{ URL::to('level/'.$value['id']) }}"
+enctype="multipart/form-data">
+{{ csrf_field() }}
+@method('DELETE')
+<button type="submit" class="btn btn-sm btn-danger">Delete</button>
+</form>
+</td>
+</tr>
 </tbody>
 @endforeach
 </table>

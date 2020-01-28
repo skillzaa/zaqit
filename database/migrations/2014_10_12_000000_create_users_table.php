@@ -20,6 +20,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password',255)->required();
             $table->string('role')->default("student")->required();
+            $table->string('enabled')->default("0")->required();
             $table->integer("testsAllowed")->default(0);
             $table->integer("totalTestsTaken")->default(0);
             $table->integer("area")->nullable();
