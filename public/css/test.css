@@ -1,0 +1,20 @@
+body {background-color: beige;}
+
+#questionDiv {
+    min-height: 150px;
+    border:2px solid rgb(241, 241, 186);
+    font-size: 1.5rem;
+}
+#skippedDiv {
+    min-height: 50px;
+    border:1px solid rgb(241, 217, 186);
+    font-size: 2rem;
+}
+.skipBadge{
+    border:1px solid rgb(240, 175, 167);
+}
+.skipBadge:hover{
+    border:2px solid rgb(241, 115, 99);
+    font-size: 2.25rem;
+    cursor: grabbing;
+}

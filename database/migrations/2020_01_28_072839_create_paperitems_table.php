@@ -17,6 +17,7 @@ class CreatePaperitemsTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->string('difficulty')->required();
+            $table->integer('quantity');
 
 $table->bigInteger('subject_id')->unsigned()->required();
 $table->bigInteger('level_id')->unsigned()->required();

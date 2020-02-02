@@ -11,8 +11,20 @@
 id="navbarSupportedContent">
 <!-- Left Side Of Navbar -->
 <ul class="navbar-nav mr-auto">
+
+@if((Auth::user() != null) && (Auth::user()->role == "admin"))
 @include('includes.navDropdown')
 @include('includes.manageDropdown')
+@endif
+
+@if((Auth::user() != null) && (Auth::user()->role == "teacher"))
+@include('includes.teacherDropdown')
+@endif
+
+
+@if((Auth::user() != null) && (Auth::user()->role == "supervisor"))
+@include('includes.teacherDropdown')
+@endif
 
 </ul>
 

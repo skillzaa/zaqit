@@ -16,8 +16,12 @@ class CreatePapersTable extends Migration
         Schema::create('papers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->required();
+            $table->integer('minutes')->default(30)->required();
             $table->text('details')->nullable();
             $table->timestamps();
+$table->bigInteger('display_heading_id')->unsigned();
+$table->foreign('display_heading_id')->references('id')->on('display_headings')->onDelete('cascade');
+
         });
     }
 

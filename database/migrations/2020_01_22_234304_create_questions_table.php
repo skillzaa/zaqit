@@ -24,7 +24,7 @@ Schema::create('questions', function (Blueprint $table) {
 
            $table->enum('difficulty', ['easy','medium', 'hard'])->default('easy')->default('easy');
 
-       $table->bigInteger('subject_id')->nullable()->unsigned();
+$table->bigInteger('subject_id')->nullable()->unsigned();
 $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('set null');
 
 $table->bigInteger('level_id')->nullable()->unsigned();

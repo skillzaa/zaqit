@@ -1,28 +1,16 @@
 <?php
-
 namespace App\Http\Controllers;
-
+use App\Models\DisplayHeading;
 use Illuminate\Http\Request;
-
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
-    {
-        return view('home');
-    }
+{
+    $this->middleware('auth');
+}
+public function index()
+{
+    $data['headings'] = DisplayHeading::all();
+    return view('home')->with("data",$data);
+}
 }

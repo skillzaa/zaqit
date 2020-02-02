@@ -68,10 +68,10 @@ $query = "SELECT * FROM questions ";
 //==========================================
 public static  function trippleWhere2(){
 $perPage=10;
-$whereCol1 = (is_null(Session::get('ddd')))? Session::get('subject_id'): "any";
-$whereCol2 = (is_null(Session::get('ddd')))? Session::get('level_id'): "any";
-$whereCol3 = (is_null(Session::get('ddd')))? Session::get('difficulty'): "any";
-
+$whereCol1 = (!is_null(Session::get('subject_id')))? Session::get('subject_id'): "any";
+$whereCol2 = (!is_null(Session::get('level_id')))? Session::get('level_id'): "any";
+$whereCol3 = (!is_null(Session::get('difficulty')))? Session::get('difficulty'): "any";
+//dd($whereCol1,$whereCol2,$whereCol3);
 //1------  V V V
 if(
     $whereCol1 !== "any" &&
@@ -94,7 +94,7 @@ if(
     $whereCol2 == "any" &&
     $whereCol3 !== "any"
     ){
-    return Question::where('subject_id',$whereCol1)->where('level_id',$whereCol2)->paginate($perPage);
+    return Question::where('difficulty',$whereCol3)->paginate($perPage);
     }
 //4------  X X X
 if(

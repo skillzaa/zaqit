@@ -1,6 +1,6 @@
-<?php
-namespace App\Models;
+<?php namespace App\Models;
 use App\Models\Question;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Paperitem;
 class Subject extends Model
@@ -12,5 +12,8 @@ class Subject extends Model
     }
     public function paperItems(){
         return $this->hasMany(Paperitem::class);
+    }
+    public function users(){
+        return $this->hasMany(User::class);
     }
 }

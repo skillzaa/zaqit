@@ -95,16 +95,6 @@ Session::flash('mainMessage' , 'Item Deleted');
 //return redirect()->back();//dont return --reload
 return redirect('question/');
 }
-/**
- * return 1 column from an Aray of objects (Assoc array)
- */
-public function aoo($arr,$value,$col="id"){
-    foreach($arr as $k=>$v){
-        if($k["id"]==$value){
-            return $k['id'];
-        }
-    }
-}
 
 }
     //class

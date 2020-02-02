@@ -4,7 +4,9 @@ use App\Models\Paper;
 use Illuminate\Http\Request;
 use App\Models\Subject;
 use App\Models\Level;
+use App\Models\DisplayHeading;
 use App\Http\Requests\PaperRequest;
+use App\Http\Requests\PaperItemsRequest;
 use App\Models\Paperitem;
 use Session;
 class PaperController extends Controller
@@ -12,21 +14,20 @@ class PaperController extends Controller
 
 public function index()
 {
-
+$data['data'] = Paper::paginate(10);
+return view('manage.paper')->with('data',$data);
 }
 
 public function create()
 {
-return view('create.paper');
+$data['displayHeadings'] = DisplayHeading::all();
+return view('create.paper')->with('data',$data);
 }
 
 public function store(PaperRequest $request)
 {
-$paper = new Paper;
-//dd($paper);
-$paper->name = $request->name;
-$paper->save();
-//dd($paper->id);
+//    dd($request::toArray());
+$paper = Paper::create($request->all());
 $request->session()->flash('mainMessage', 'Paper '.$request->name .' has been created');
 return redirect('paper/'. $paper->id);
 }
@@ -37,6 +38,8 @@ public function show($id)
 $data['data'] = Paper::findOrFail($id);
 $data['subjects'] = Subject::all();
 $data['levels'] = Level::all();
+$data['displayHeadings'] = DisplayHeading::all();
+
 return view('edit.paper')->with("data",$data);
 }
 public function deleteItem ($paper_id,$item_id){
@@ -47,19 +50,11 @@ Session::flash('mainMessage' , 'Item Deleted');
 return redirect('paper/'.$paper_id);
 }
 
-public function addItem (Request $request){
-//dd($request);
-$item = new Paperitem;
-//dd($item);
-$item->subject_id = $request->subject;
-$item->paper_id = $request->id;
-$item->level_id = $request->level;
-$item->difficulty = $request->difficulty;
-$item->save();
-//dd($paper->id);
+public function addItem (PaperItemsRequest $request){
+$item = Paperitem::create($request->all());
 $request->session()->flash('mainMessage', 'Subject  '.$request->name .' added to Paper');
 //--send it to request id (thats papaer id in items table)
-return redirect('paper/'. $request->id);
+return redirect('paper/'. $request->paper_id);
 }
  public function update(PaperRequest $request,$id)
 {
@@ -71,12 +66,13 @@ return redirect()->back();
 }
 
 
-    public function destroy(Paper $paper)
-    {
-        // $item = Subject::findOrFail($id);
-        // $item->delete();
-        // Session::flash('mainMessage' , 'Item Deleted');
-        // //return redirect()->back();//dont return --reload
-        // return redirect('subject/');
-    }
+public function destroy($id)
+{
+//dd("Paper - destroy");
+$item = Paper::findOrFail($id);
+$item->delete();
+Session::flash('mainMessage' , 'Item Deleted');
+//return redirect()->back();//dont return --reload
+return redirect('paper/');
+}
 }

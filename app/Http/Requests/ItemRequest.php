@@ -12,7 +12,7 @@ class ItemRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:subjects|max:20|min:3|regex:/^[a-z\d\-_\s]+$/i'
+            'name' => 'required|unique:subjects|max:100|min:2|regex:/^[a-z\d\-_\s]+$/i'
         ];
     }
 }

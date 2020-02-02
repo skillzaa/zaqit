@@ -13,7 +13,9 @@
 <div class="col-sm-9">
     <select name="subject_id" id="" class="form-control">
         @foreach($data['subjects'] as $key => $value)
-        <option value="{{ $value['id'] }}">{{ $value['name'] }}</option>
+        <option value="{{ $value['id'] }}"
+{{($value['id'] == $data['question']['subject_id'])? " selected " : ""}}
+        >{{ $value['name'] }}</option>
         @endforeach
     </select>
 </div>
@@ -26,7 +28,9 @@
 <div class="col-sm-9">
     <select name="level_id" id="" class="form-control">
         @foreach($data['levels'] as $key => $value)
-        <option value="{{ $value['id'] }}">{{ $value['name'] }}</option>
+        <option value="{{ $value['id'] }}"
+{{($value['id'] == $data['question']['level_id'])? " selected " : ""}}
+        >{{ $value['name'] }}</option>
         @endforeach
     </select>
 </div>
@@ -38,9 +42,15 @@
    <br/>
 <div class="col-sm-9">
     <select name="difficulty" id="" class="form-control">
-        <option value="easy">Easy</option>
-        <option value="medium">Medium</option>
-        <option value="hard">Hard</option>
+        <option value="easy"
+{{($data['question']['difficulty']== "easy")? " selected " : ""}}
+        >Easy</option>
+        <option value="medium"
+{{($data['question']['difficulty']== "medium")? " selected " : ""}}
+        >Medium</option>
+        <option value="hard"
+{{($data['question']['difficulty']== "hard")? " selected " : ""}}
+        >Hard</option>
     </select>
 </div>
 </div>

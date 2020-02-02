@@ -1,23 +1,22 @@
 @extends('layouts.app')
-
 @section('content')
+@include('home2')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
+<ul class="list-group">
+@foreach($data['headings'] as $k=>$v)
+<li class="list-group-item active">Topic: {{$v['name']}}</li>
+        @if(count($v['papers'])==0)
+        <li class="list-group-item">No Paper Found.</li>
+        @else
+            @foreach($v['papers'] as $kk=>$vv)
+<li class="list-group-item"><a
+    href="{{url('/test/'.$vv['id'])}}">
+    {{$vv['name']}}</a></li>
+            @endforeach
+        @endif
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in!
-                </div>
-            </div>
-        </div>
-    </div>
+@endforeach
+</ul>
 </div>
+@include('includes.footer')
 @endsection

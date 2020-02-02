@@ -7,11 +7,11 @@
   <a class="dropdown-item" href="{{ url('/level') }}">Level</a>
   <a class="dropdown-item" href="{{ url('/displayheading') }}">Display Heading</a>
   <div class="dropdown-divider"></div>
-  <a class="dropdown-item" href="{{ url('/teacher') }}">Teacher</a>
-  <a class="dropdown-item" href="{{ url('/supervisor') }}">Supervisor</a>
+
   <a class="dropdown-item" href="{{ url('/student') }}">Students</a>
+  
   <div class="dropdown-divider"></div>
   <a class="dropdown-item" href="{{ url('/question') }}">Question</a>
-  <a class="dropdown-item" href="#">Paper</a>
+  <a class="dropdown-item" href="{{ url('/paper') }}">Paper</a>
 </div>
 </li>

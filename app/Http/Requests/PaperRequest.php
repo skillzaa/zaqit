@@ -12,7 +12,9 @@ class PaperRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|max:100|min:3|regex:/^[a-z\d\-_\s]+$/i'
+            'name' => 'required|max:100|min:5|regex:/^[a-z\d\-_\s]+$/i',
+            'display_heading_id'=> 'required|exists:display_headings,id',
+            'minutes'=>'required'
         ];
     }
 }

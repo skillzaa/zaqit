@@ -1,26 +1,29 @@
+
 <div class="btn-group">
-    @if($data['enabled']=="all")
-    <div class="btn-group">
-        <a  class="btn btn-sm  btn-success" href={{URL('student/enabled/all')}}>All</a>
-        <a  class="btn btn-sm  btn-secondary" href={{URL('student/enabled/enabled')}}>Enabled</a>
-        <a  class="btn btn-sm  btn-secondary" href={{URL('student/enabled/disabled')}}>Disabled</a>
-    </div>
+<a  class="btn btn-sm  
+{{($data['param']=="all")? " btn-success " : "btn-secondary"}}
+" href={{URL('student/query/all')}}>All</a>
 
-    @elseif($data['enabled']=="enabled")
+<a  class="btn btn-sm  
+{{($data['param']=="enabled")? " btn-success " : "btn-secondary"}}
+" href={{URL('student/query/enabled')}}>Enabled</a>
 
-    <div class="btn-group">
-        <a  class="btn btn-sm  btn-secondary" href={{URL('student/enabled/all')}}>All</a>
-        <a  class="btn btn-sm  btn-success" href={{URL('student/enabled/enabled')}}>Enabled</a>
-        <a  class="btn btn-sm  btn-secondary" href={{URL('student/enabled/disabled')}}>Disabled</a>
-    </div>
+<a  class="btn btn-sm  
+{{($data['param']=="disabled")? " btn-success " : "btn-secondary"}}
+" href={{URL('student/query/disabled')}}>Disabled</a>
 
-    @elseif($data['enabled']=="disabled")
 
-    <div class="btn-group">
-        <a  class="btn btn-sm  btn-secondary" href={{URL('student/enabled/all')}}>All</a>
-        <a  class="btn btn-sm  btn-secondary" href={{URL('student/enabled/enabled')}}>Enabled</a>
-        <a  class="btn btn-sm  btn-success" href={{URL('student/enabled/disabled')}}>Disabled</a>
-    </div>
+<a  class="btn btn-sm  
+{{($data['param']=="student")? " btn-success " : "btn-secondary"}}
+" href={{URL('student/query/student')}}>Student</a>
 
-    @endif
-  </div>
+<a  class="btn btn-sm  
+{{($data['param']=="teacher")? " btn-success " : "btn-secondary"}}
+" href={{URL('student/query/teacher')}}>Teacher</a>
+
+<a  class="btn btn-sm  
+{{($data['param']=="supervisor")? " btn-success " : "btn-secondary"}}
+" href={{URL('student/query/supervisor')}}>Supervisor</a>
+</div>
+
+    
