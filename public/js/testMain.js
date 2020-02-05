@@ -1,4 +1,5 @@
 //-----------------Globals-----
+let over = false;
 let paper = "";
 let questions = "";
 let startTime = "";// parseInt(new Date().getTime() / 1000);
@@ -22,7 +23,7 @@ let option4 = document.getElementById("option4");
 //========================================
 //========================================
 window.addEventListener('DOMContentLoaded', (event) => {
-finishBtn.style.display="none";
+//finishBtn.style.display="none";
 //get questions into global var
 questions = JSON.parse(document.getElementById("questions").value);
 //get papaer
@@ -46,6 +47,7 @@ if(autoSkip()){skip()};
 document.getElementById("skip").addEventListener('click',function(){
 skip();
 });
+document.getElementById("finish").addEventListener('click',formSubmit);
 //=====================================---
 //.................................
 document.addEventListener('click', function (e) {
@@ -73,9 +75,12 @@ var t = e.target;
 
 //================================
 function gameloop(){
-loadQdata();
-setOptionValuesAndSpans();
-setOldValues();
-//console.log("loop");
+if(over==false){
+    loadQdata();
+    setOptionValuesAndSpans();
+    setOldValues();
+    clock();
+}
+
 }
 //================================

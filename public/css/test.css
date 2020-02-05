@@ -18,3 +18,10 @@ body {background-color: beige;}
     font-size: 2.25rem;
     cursor: grabbing;
 }
+
+#clockSpan{
+background-color: rgb(83, 55, 4);
+color: beige;
+padding:6px;
+border-radius: 10px;
+}

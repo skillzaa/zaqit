@@ -31,7 +31,15 @@ $paper = Paper::create($request->all());
 $request->session()->flash('mainMessage', 'Paper '.$request->name .' has been created');
 return redirect('paper/'. $paper->id);
 }
-
+public function update(PaperRequest $request,$id)
+{
+//dd($request->all());
+$paper = Paper::findOrFail($id);
+$input = $request->all();
+$paper->fill($input)->save();
+$request->session()->flash('mainMessage', 'Paper has been Updated');
+return redirect()->back();
+}
 
 public function show($id)
 {
@@ -55,14 +63,6 @@ $item = Paperitem::create($request->all());
 $request->session()->flash('mainMessage', 'Subject  '.$request->name .' added to Paper');
 //--send it to request id (thats papaer id in items table)
 return redirect('paper/'. $request->paper_id);
-}
- public function update(PaperRequest $request,$id)
-{
-$paper = Paper::findOrFail($id);
-$input = $request->all();
-$paper->fill($input)->save();
-$request->session()->flash('mainMessage', 'Paper has been Updated');
-return redirect()->back();
 }
 
 

@@ -101,3 +101,11 @@ function skippedToSpans(){
     skippedDiv.innerHTML = txt;
 
 }
+formSubmit = (e)=>{
+        //e.preventDefault();
+        let result  = checkTest(questions);
+        document.getElementById('out').value = JSON.stringify(result);
+        document.getElementById('testForm').submit();
+        //console.log(document.getElementById('questions').value);
+
+}

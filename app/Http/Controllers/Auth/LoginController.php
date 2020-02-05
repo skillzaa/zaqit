@@ -20,17 +20,6 @@ class LoginController extends Controller
    // User role
    // $role = Auth::user()->role->name;
         return '/';
-    // Check user role
-    // switch ($role) {
-    //     case 'Manager':
-    //             return '/dashboard';
-    //         break;
-    //     case 'Employee':
-    //             return '/projects';
-    //         break;
-    //     default:
-    //             return '/login';
-    //         break;
-    // }
+
     }
 }
