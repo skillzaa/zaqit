@@ -47,7 +47,6 @@ $data['data'] = Paper::findOrFail($id);
 $data['subjects'] = Subject::all();
 $data['levels'] = Level::all();
 $data['displayHeadings'] = DisplayHeading::all();
-
 return view('edit.paper')->with("data",$data);
 }
 public function deleteItem ($paper_id,$item_id){

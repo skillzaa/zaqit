@@ -49,10 +49,10 @@ Enabled/Disabled</label>
 <select class="form-control" name="enabled" id="">
     <option value="1"
     {{($data['data']['enabled']=="1")? " selected " : ""}}
-    >Enable</option>
+    >Enabled</option>
     <option value="0"
     {{($data['data']['enabled']=="0")? " selected " : ""}}
-    >Disable</option>
+    >Disabled</option>
 </select>
 </div>
 </div>
@@ -65,6 +65,8 @@ Test Allowed</label>
 <input type="number" name="testsAllowed" class="form-control" value="{{$data['data']['testsAllowed']}}">
 </div>
 </div>
+
+@if(($data['data']['role'] == "teacher") || ($data['data']['role'] == "supervisor"))
 
 <div class="form-group row">
     <label for="titleid" class="col-sm-3 col-form-label">
@@ -82,6 +84,7 @@ Test Allowed</label>
     </div>
     </div>
 
+@endif
 
     <div class="form-group row">
         <div class="offset-sm-3 col-sm-9">

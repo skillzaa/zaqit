@@ -3,7 +3,8 @@
 <link rel="stylesheet" href="{{asset('css/test.css')}}">
 <div id="reportCard"></div>
 <div id="testDiv"  class="container">
-<h1>Test</h1>
+<span class="badge badge-success" id="attemptsRemainingDiv"></span>
+<br/>
 <div id="clockSpan"></div>
 <div id="title"></div>
 <div class="testDiv">
@@ -27,6 +28,7 @@
     {{ csrf_field() }}
 <input  id="questions" name="questions" type="hidden" value="{{json_encode($data['questions'])}}">
 <input  id="paper" name="paper" type="hidden" value="{{json_encode($data['paper'])}}">
+<input  id="attemptsRemaining" name="attemptsRemaining" type="hidden" value="{{json_encode($data['attemptsRemaining'])}}">
 <input  id="out" name="out" type="hidden" value="">
 
 </form>
@@ -35,7 +37,5 @@
 <script src="{{asset('js/testMain.js')}}"></script>
 <script src="{{asset('js/checkTest.js')}}"></script>
 <script src="{{asset('js/clock.js')}}"></script>
-
-
 </div>
 @endsection

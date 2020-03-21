@@ -1,9 +1,13 @@
-function loadQdata(){
+export default class TestBase{
+constructor(){
+    
+}    
+ loadQdata(){
 questionDiv.innerText = questions[qIndex]['question'];
 title.innerText = "Question No : " + (parseInt(qIndex)+1) + " of " + noOfQs;
 }
 //----------------------------------
-function setOptionValuesAndSpans(){
+ setOptionValuesAndSpans(){
 option1Span.innerText = questions[qIndex]['option1'];
 option2Span.innerText = questions[qIndex]['option2'];
 option3Span.innerText = questions[qIndex]['option3'];
@@ -14,7 +18,17 @@ option3.value = questions[qIndex]['option3'];
 option4.value = questions[qIndex]['option4'];
 }
 //=========================================
-function setOldValues(){
+//.................................
+document.addEventListener('click',  (e) {
+    var t = e.target;
+      if (t.classList.contains('skipBadge')) {
+    let questionIndex = (t.getAttribute("data-questionIndex"));
+    //console.log(questionIndex);
+    qIndex = parseInt(questionIndex);
+    }//if
+    });
+//===========================================
+ setOldValues(){
 let oldValue = questions[qIndex]['optionSelected'];
 //console.log(oldValue);
 switch (oldValue) {
@@ -39,7 +53,7 @@ switch (oldValue) {
 }
 }
 //------------------------------------------
-function skip(){
+ skip(){
 if(!skipped.includes(qIndex)){
             option1.checked=false;
             option2.checked=false;
@@ -49,17 +63,15 @@ if(!skipped.includes(qIndex)){
     skipped = skipped.sort((a, b) => a - b);
     questions[qIndex]['optionSelected'] = null;
     let txt = "";
-    skipped.forEach(function(item){
+    skipped.forEach((item){
         txt += `<span class='skipBadge' data-questionIndex="${item}">${parseInt(item)+1}</span>`;
     });
     skippedDiv.innerHTML = txt;
 }
-/**wrong--single responsibility princicple--no more than one task / function */
-// //on skip move to next question
-// (qIndex < (noOfQs-1) )? qIndex++ : qIndex;
 }
 
-function unSkip($incomming){
+ unSkip($incomming){
+//reduce one digit
 $qNo = parseInt($incomming);
 const newSkipped = [];
     skipped.forEach(elm => {
@@ -68,10 +80,13 @@ const newSkipped = [];
         }
     });
 skipped = newSkipped.sort((a, b) => a - b);
+
+console.log("New",newSkipped);
+console.log("skipped",skipped);
 skippedToSpans();
 }
 //++++++++++++++++++++++++++++++++++++++++++
-function autoSkip(){
+ autoSkip(){
 if( option1.checked==false
     && option2.checked==false
     && option3.checked==false
@@ -81,20 +96,10 @@ return true;
     }
 return false;
 }//autoSkip
-function isQuestionAttempted(){
-if( option1.checked==false
-    && option2.checked==false
-    && option3.checked==false
-    && option4.checked==false
-    ){
-return false; //question is not attempted
-    }
-return true;
-}//autoSkip
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-function skippedToSpans(){
+ skippedToSpans(){
     let txt="";
-    skipped.forEach(function(item){
+    skipped.forEach((item){
         txt += `<span class='skipBadge' data-questionIndex="${item}">${parseInt(item)+1}</span>`;
     });
     skippedDiv.innerHTML = txt;
@@ -108,13 +113,5 @@ formSubmit = (e)=>{
         //console.log(document.getElementById('questions').value);
 
 }
-function removeFromSkipped(qNo){
-const newSkipped = [];
-    skipped.forEach(elm => {
-        if(elm != parseInt(qNo)){
-            newSkipped.push(elm);
-        }
-    });
-skipped = newSkipped.sort((a, b) => a - b);
-skippedToSpans();
+        
 }

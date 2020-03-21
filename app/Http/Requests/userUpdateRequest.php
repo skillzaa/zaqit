@@ -24,7 +24,7 @@ class userUpdateRequest extends FormRequest
             'role'=> 'required|in:supervisor,teacher,student',
             'enabled'=> 'required|in:1,0',
             'testsAllowed'=> 'required|integer|min:0',
-            'subject_id' => 'required|exists:subjects,id',
+            'subject_id' => 'exists:subjects,id',
         ];
     }
 }

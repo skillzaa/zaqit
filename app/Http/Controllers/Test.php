@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Paper;
 use App\Models\Question;
+use App\Models\Subject;
 use App\Models\CheckPaper;
 use Auth;
 class Test extends Controller
@@ -18,7 +19,13 @@ if((Auth::user()->role) != "admin"){
 if((Auth::user()->testsAllowed) < 1){
 $data['msg'] = "You Are NOT Authorised To Take Any More Tests";
 return view('errors.general')->with("data",$data);
-}}
+}    
+//...........................
+if(Auth::user()->enabled !== "1"){
+    $data['msg'] = "This account is not enabled Please contact the administrator.";
+    return view('errors.general')->with("data",$data);
+}
+}//if not admin
 
 $d = Paper::where('id',$id)->first();
 $data['paper'] = ($d->toArray());
@@ -30,15 +37,28 @@ $data['questions'] = [];
         $step3  = array_slice($step2, 0, $v['quantity']);
         $data['questions'] = array_merge($data['questions'], $step3);
     }
-$this->decAllowedTests();
+    $this->decAllowedTests();     
 ///XXXX remove correctOption from EachQuestion
+$data['attemptsRemaining'] = $this->getAllowedTests();
 return view('test.test')->with("data",$data);
 
 }
 //---------------------------------------------
 public function check(Request $request){
+//-------------------------------------------s    
+    if((Auth::user()->role) != "admin"){
+        if((Auth::user()->testsAllowed) < 1){
+        $data['msg'] = "You Are NOT Authorised To Take Any More Tests";
+        return view('errors.general')->with("data",$data);
+        }}
+//-----------------------------------------------------       //---dec test allowed is here now
+    $this->decAllowedTests();     
+//-----------------------------------------------------       
+
 
 $data['data'] = json_decode($request->out);
+$data['data'] = $this->getSubjectNames($data['data']);
+//dd($data['data']);
 $data['gtq'] = $this->addCol($data['data'],"totalNoOfQuestion");
 $data['gta'] = $this->addCol($data['data'],"correctAnswers");
 $data['gtt'] = $data['gta']/$data['gtq']*100;
@@ -53,6 +73,10 @@ $user = Auth::user();
 $user->testsAllowed = $user->testsAllowed -1;
 $user->save();
 return true;
+}
+private function getAllowedTests(){
+$user = Auth::user();
+return $user->testsAllowed;
 }
 
 //---------------------------------------------
@@ -77,6 +101,16 @@ foreach ($data as $key => $value) {
 return $sum;
 }
 
-
+private function getSubjectNames($incomming){
+foreach ($incomming as $key => $value) {
+    $subj = Subject::find($value->subject_id);
+    //dd($subj->name);
+    //dd($value);
+    //dd($incomming[$key]);
+    $value->subject= $subj->name;
+}
+//dd($incomming);
+return $incomming;
+}
 
 }//class

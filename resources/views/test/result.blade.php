@@ -15,7 +15,7 @@
 </tr>
 @foreach($data['data'] as $k=>$v)
     <tr>
-        <td>{{$v->subject_id}}</td>
+        <td>{{$v->subject}}</td>
         <td>{{$v->totalNoOfQuestion}}</td>
         <td>{{$v->correctAnswers}}</td>
         <td>{{$v->correctAnswers}}</td>
